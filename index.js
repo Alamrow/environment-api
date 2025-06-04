@@ -5,4 +5,4 @@ app.get("/api/environment", (req, res) => {
     res.json({ message: "API is live!", sensorData: {} });
 });
 
-app.listen(3000, () => console.log("Server running on port 3000"));
+module.exports = app;  // <- Add this line to export app for Vercel
