@@ -1,8 +1,17 @@
 const express = require("express");
 const app = express();
 
-app.get("/api/environment", (req, res) => {
-    res.json({ message: "API is live!", sensorData: {} });
+app.use(express.json()); // <-- Allows ESP8266 to send JSON data
+
+let sensorData = {}; // <-- Stores latest ESP8266 readings
+
+app.post("/api/environment", (req, res) => {
+    sensorData = req.body;
+    res.json({ message: "Data received!", sensorData });
 });
 
-module.exports = app;  // <- Add this line to export app for Vercel
+app.get("/api/environment", (req, res) => {
+    res.json({ message: "API is live!", sensorData });
+});
+
+module.exports = app;
